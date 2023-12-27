@@ -1,6 +1,11 @@
 import pygame
 import random
+"""
+Модули:
+:pygame: Предоставляет интерфейс для работы с оконной системой, графикой и звуком.
+:random: Предоставляет функции для работы со случайными числами.
 
+"""
 # Начать игру
 pygame.init()
 
@@ -14,11 +19,23 @@ BLUE = (0, 0, 255)
 WIDTH = 800
 HEIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Brick Breaker")
+pygame.display.set_caption("El rompe madres")
 
-# Характеристики поля (Функция)
+# Характеристики ракетки (Функция)
 class Paddle:
     def __init__(self):
+        """
+        Класс, который характеризует ракетку в игре 
+         Args:
+        :ivar (int) width: Ширина ракетки.
+        :ivar (int) height: Высота ракетки.
+        :ivar (int) x: Положение по оси x ракетки.
+        :ivar (int) y: Положение по оси y ракетки.
+        :ivar (int) speed: Скорость движения ракетки.
+        
+        Returns:
+        :non
+        """
         self.width = 100
         self.height = 10
         self.x = (WIDTH - self.width) // 2
@@ -27,9 +44,25 @@ class Paddle:
 
     def draw(self):
         pygame.draw.rect(screen, WHITE, (self.x, self.y, self.width, self.height))
-
+        
+# Характеристики мяча (Функция)
 class Ball:
     def __init__(self):
+        
+        """
+    Класс, который характеризует мяч в игре 
+    
+    Args:
+    :size (int): Размер мяча.
+    :x (int): Положение по оси x.
+    :y (int): Положение по оси y.
+    :speed_x (int): Скорость по оси x.
+    :speed_y (int): Скорость по оси y
+    
+    Returns:
+    non
+    
+    """
         self.size = 10
         self.x = WIDTH // 2
         self.y = HEIGHT // 2
@@ -38,9 +71,24 @@ class Ball:
 
     def draw(self):
         pygame.draw.circle(screen, RED, (self.x, self.y), self.size)
-
+        
+# Характеристики кирпичов (Функция)
 class Brick:
     def __init__(self, x, y):
+        
+        """
+        Класс, который характеризует кирпичи в игре 
+        
+        Args:
+        :width (int): Ширина кирпича.
+        :height (int): Высота кирпича.
+        :x (int): Положение по оси x.
+        :y (int): Положение по оси y.
+        :visible (bool): Флаг видимости кирпича.
+        
+        Returns:
+        non
+        """
         self.width = 60
         self.height = 20
         self.x = x
@@ -51,7 +99,7 @@ class Brick:
         if self.visible:
             pygame.draw.rect(screen, BLUE, (self.x, self.y, self.width, self.height))
 
-# Crear objetos
+# Основание объекты
 paddle = Paddle()
 ball = Ball()
 bricks = []
@@ -60,7 +108,7 @@ for i in range(8):
         brick = Brick(90 + i * 100, 50 + j * 30)
         bricks.append(brick)
 
-# Game loop
+# Петля игры
 running = True
 clock = pygame.time.Clock()
 while running:
@@ -121,3 +169,4 @@ while running:
 
 # Выходить из игры
 pygame.quit()
+
