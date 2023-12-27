@@ -44,6 +44,12 @@ class Paddle:
 
     def draw(self):
         pygame.draw.rect(screen, WHITE, (self.x, self.y, self.width, self.height))
+
+    def collision(self, ball):
+        if ball.y + ball.size >= self.y and ball.x + ball.size >= self.x and ball.x - ball.size <= self.x + self.width:
+            return True
+        return False
+
         
 # Характеристики мяча (Функция)
 class Ball:
@@ -99,6 +105,13 @@ class Brick:
         if self.visible:
             pygame.draw.rect(screen, BLUE, (self.x, self.y, self.width, self.height))
 
+    def collision(self, ball):
+        if self.visible:
+            if ball.y - ball.size <= self.y + self.height and ball.x + ball.size >= self.x and ball.x - ball.size <= self.x + self.width:
+                   return True
+        return False
+
+
 # Основание объекты
 paddle = Paddle()
 ball = Ball()
@@ -134,12 +147,12 @@ while running:
     ball.y += ball.speed_y
 
     # Удар с шаром
-    if ball.y + ball.size >= paddle.y and ball.x + ball.size >= paddle.x and ball.x - ball.size <= paddle.x + paddle.width:
+    if paddle.collision(ball):
         ball.speed_y *= -1
 
     # Удар с кирпичами
     for brick in bricks:
-        if brick.visible and ball.y - ball.size <= brick.y + brick.height and ball.x + ball.size >= brick.x and ball.x - ball.size <= brick.x + brick.width:
+        if brick.collision(ball):
             brick.visible = False
             ball.speed_y *= -1
 
@@ -169,4 +182,5 @@ while running:
 
 # Выходить из игры
 pygame.quit()
+
 
